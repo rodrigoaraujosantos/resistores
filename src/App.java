@@ -7,7 +7,7 @@ public class App {
         String[] coresResistor = new String[4];
         double resistencia = 0;
 
-        // Separar valor e unidade
+        
         String[] partes = resistenciaString.split(" ");
         if (partes.length < 2) {
             System.out.println("Formato inválido para: " + resistenciaString);
@@ -18,7 +18,7 @@ public class App {
         String unidade = partes[1];
         
 
-        // Converter valor para ohms
+        
         try {
             if (unidade.equals("ohms")) {
                 resistencia = parseValorComUnidade(valorString);
@@ -36,31 +36,31 @@ public class App {
             return new String[]{"Erro", "Erro", "Erro", "Erro"};
         }
 
-        // Ajustar o cálculo do multiplicador e dos dígitos
+        
         int multiplicadorIndex = 0;
         if (resistencia >= 1000) {
-            multiplicadorIndex = (int) (Math.log10(resistencia) - 2); // Ajustar o multiplicador para k ohms e M ohms
+            multiplicadorIndex = (int) (Math.log10(resistencia) - 2);
         } else if (resistencia >= 100) {
-            multiplicadorIndex = (int) (Math.log10(resistencia) - 1); // Ajustar o multiplicador para ohms
+            multiplicadorIndex = (int) (Math.log10(resistencia) - 1);
         } else {
-            multiplicadorIndex = 0; // Para resistências menores que 100 ohms
+            multiplicadorIndex = 0;
         }
 
         int valorBase = (int) (resistencia / Math.pow(10, multiplicadorIndex));
         int digito1 = valorBase / 10;
         int digito2 = valorBase % 10;
 
-        // Verificar se os índices estão dentro dos limites do array cores
+        
         if (digito1 < 0 || digito1 >= cores.length) digito1 = 0;
         if (digito2 < 0 || digito2 >= cores.length) digito2 = 0;
         if (multiplicadorIndex < 0 || multiplicadorIndex >= cores.length) multiplicadorIndex = 0;
 
-        // Definir as cores dos dígitos e do multiplicador
-        coresResistor[0] = cores[digito1]; // Primeira banda
-        coresResistor[1] = cores[digito2];  // Segunda banda
-        coresResistor[2] = cores[multiplicadorIndex]; // Multiplicador
+        
+        coresResistor[0] = cores[digito1];
+        coresResistor[1] = cores[digito2];
+        coresResistor[2] = cores[multiplicadorIndex];
 
-        // Definir a cor da tolerância (assumindo 5% de tolerância)
+        
         coresResistor[3] = "Dourada";
 
         return coresResistor;
@@ -77,7 +77,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        // Testar com diferentes valores de resistência
+        
         String[] resistencias = {"10 ohms", "100 ohms", "220 ohms", "330 ohms", "470 ohms", "680 ohms", "1k ohms", "2M ohms"};
 
         for (String resistencia : resistencias) {
